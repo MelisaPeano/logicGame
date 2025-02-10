@@ -71,6 +71,9 @@ def startGame():
           💬 "Si el arma no fue un cuchillo de cocina, entonces el crimen no ocurrió \n
               en la Suite de Richard." \n
           📜 Proposición lógica: (¬t ∧ ¬p) \n
+          Además agregá:
+          💬 "Si el culpable no es Lila Hart, entonces el culpable es Victor Kane" \n
+          📜 Proposición lógica:  ( ¬ L → V) \n
           🔍 Contexto: Eleanor Graves, una mujer fría y calculadora, ex socia de Richard, \n 
             ha sido traicionada en un turbio negocio.\n
            Su afirmación sugiere una relación entre el arma y el lugar del crimen.\n
@@ -80,6 +83,7 @@ def startGame():
           Veamos que información obtenemos de la siguiente declaración: \n
           """) 
     logicalPropositions.append("(¬t ∧ ¬p)")
+    logicalPropositions.append("( ¬ L → V)")
     input(" \n Presiona enter para continuar... \n")
 
     print(""" \n
@@ -92,6 +96,9 @@ def startGame():
           Cuando le pregunto sobre el crimen, su respuesta es clara pero fría: \n 
           💬 ‘Si el crimen ocurrió en la Sala de Máquinas, entonces el arma fue una llave inglesa’.\n
           📜 Proposición lógica: (q -> s) \n
+          Además agregó:
+          💬 'Si el culpable es Maggie Sullivan, entonces el culpable no es Victor Kane. \n
+          Proposición lógica: (M → ¬V).\n
           No titubea, no duda. Pero en su tono hay algo más… ¿conocimiento o simple coincidencia? \n
           Algo me dice que esta mujer sabe más de lo que admite. \n
           
@@ -99,6 +106,7 @@ def startGame():
           Veamos que información obtenemos del Dr. Samuel Reeves: \n
           """) 
     logicalPropositions.append("(q -> s)")
+    logicalPropositions.append("(M → ¬V)")
     input(" \n Presiona enter para continuar... \n")
     print(""" \n
           Dr. Samuel Reeves. \n
@@ -109,6 +117,8 @@ def startGame():
           Cuando le pregunto sobre el crimen, su respuesta es directa, sin adornos: \n 
           💬 ‘El crimen no ocurrió en la Cocina’. \n
           📜 Proposición lógica: ¬r \n
+          💬 ‘El culpable no soy yo, ni es Eleanor Graves.’. \n
+          📜 Proposición lógica: (¬D and ¬E) \n
           Su tono es seguro, pero su mirada se desvía apenas un instante. ¿Un intento de \n
           ocultar algo o simple costumbre? Algo en él no encaja del todo. \n
           
@@ -116,6 +126,7 @@ def startGame():
           Veamos qué información obtenemos de la declaración de Maggie Sullivan \n
           """) 
     logicalPropositions.append("¬r")
+    logicalPropositions.append("(¬D and ¬E)")
 
     input(" \n Presiona enter para continuar... \n")
 
@@ -129,6 +140,8 @@ def startGame():
           Finalmente, con un suspiro pesado, suelta su declaración: \n
           💬 ‘Si el arma no fue un cable eléctrico, entonces el crimen ocurrió en la Sala de Máquinas’. \n
           📜 Proposición lógica: (¬k → q) \n
+          💬 ‘Si el culpable no es Samuel Reeves, entonces el culpable es Victor Kane'. \n
+          📜 Proposición lógica: ( ¬ D → V) \n
           Su voz es firme, pero hay una ligera vacilación en su tono. ¿Es miedo, \n
           duda o simplemente cautela? Algo en su actitud me dice que sabe más \n
           de lo que está dispuesta a confesar. \n
@@ -137,6 +150,7 @@ def startGame():
           Veamos qué información obtenemos de la siguiente declaración: \n
           """)
     logicalPropositions.append("(¬k → q)")
+    logicalPropositions.append("( ¬ D → V)")
     input(" \n Presiona enter para continuar... \n")
     print(""" \n
           Victor Kane. \n
@@ -145,8 +159,11 @@ def startGame():
           Su postura rígida y su mirada fija evitan cualquier contacto visual directo. \n
           Sus respuestas son precisas, casi mecánicas, como si estuviera \n
           evitando el mínimo error. Al preguntarle sobre el crimen, su respuesta \n
-          es tajante: 💬 ‘El arma no fue un cuchillo de cocina’.\n
+          es tajante: 
+          💬 ‘El arma no fue un cuchillo de cocina’.\n
           📜 Proposición lógica: (¬t) \n
+          💬 ‘El culpable no es Maggie Sullivan.’.\n
+          📜 Proposición lógica: ( ¬M) \n
           La convicción con la que lo dice no deja lugar a dudas, pero hay algo \n
           en su actitud que me hace pensar que aún está ocultando más. \n
           
@@ -154,8 +171,27 @@ def startGame():
           Veamos que información recolectamos hasta el momento: \n
           """)
     logicalPropositions.append("(¬t)")
+    logicalPropositions.append("( ¬M)")
+
+
     print("Proposiciones logicas obtenidas hasta el momento: \n" + "\n".join(logicalPropositions))
     input(" \n Presiona enter para continuar... \n")
+
+    print(""" \n
+      Soy el mejor detective! con estas declaraciones puedo encontrar el arma homicida \n
+          y el culpable!, si traducimos estas proposiciones logicas obtenemos las siguentes CNF \n
+      """)
+
+    input(" \n Presiona enter para continuar... \n")
+    
+    print(""" 
+          -------------------------------------------------------------------------
+          -------------------------------------------------------------------------
+          Debemos pasar las proposiciones logicas a CNF para poder usar el SAT-Solver \n
+          Proposiciones lógicas obtenidas: \n
+
+          """)
+
 
 
     
