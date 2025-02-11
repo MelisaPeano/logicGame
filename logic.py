@@ -1,5 +1,6 @@
 def startGame():
     logicalPropositions = []
+    SatSolver = [(" \n (¬t or ¬p)"), ("\n(L or V)"), ("\n(¬q or s)"), ("\n(¬M or ¬V)"), ("\n¬t"), ("\n(¬M)"), ("\n(¬r)"),("\n¬D"), ("\n¬E"), ("\n(k or q)"), ("\n(D or V)")  ]
     print("Comienza el juego \n")
     print("""
            -------------------------------------------------------------------------
@@ -71,7 +72,7 @@ def startGame():
           💬 "Si el arma no fue un cuchillo de cocina, entonces el crimen no ocurrió \n
               en la Suite de Richard." \n
           📜 Proposición lógica: (¬t ∧ ¬p) \n
-          Además agregá:
+          Además agregá:\n
           💬 "Si el culpable no es Lila Hart, entonces el culpable es Victor Kane" \n
           📜 Proposición lógica:  ( ¬ L → V) \n
           🔍 Contexto: Eleanor Graves, una mujer fría y calculadora, ex socia de Richard, \n 
@@ -96,7 +97,7 @@ def startGame():
           Cuando le pregunto sobre el crimen, su respuesta es clara pero fría: \n 
           💬 ‘Si el crimen ocurrió en la Sala de Máquinas, entonces el arma fue una llave inglesa’.\n
           📜 Proposición lógica: (q -> s) \n
-          Además agregó:
+          Además agregó:\n
           💬 'Si el culpable es Maggie Sullivan, entonces el culpable no es Victor Kane. \n
           Proposición lógica: (M → ¬V).\n
           No titubea, no duda. Pero en su tono hay algo más… ¿conocimiento o simple coincidencia? \n
@@ -189,8 +190,8 @@ def startGame():
           -------------------------------------------------------------------------
           Debemos pasar las proposiciones logicas a CNF para poder usar el SAT-Solver \n
           Proposiciones lógicas obtenidas: \n
-
-          """)
+          """ + "\n".join(SatSolver) + "\n")
+      
 
 
 
@@ -210,7 +211,13 @@ def logicGame():
     if option == 1:
         startGame()
     elif option == 2:
-        print("Conocé a los integrantes del equipo")
+        print(""" \n
+         Los integrantes del equipo son: \n
+         2. Arroyo Matías Ariel \n
+         1. Megna Juan Ignacio \n
+         2. Peano Melisa Raquel \n
+         2. SalomónMartin Ignacio \n
+         """)
     elif option == 3:
         exit()
 
