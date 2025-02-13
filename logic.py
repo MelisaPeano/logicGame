@@ -41,9 +41,7 @@ def startGame():
           🗡️ Posibles armas \n
             🔪 Cuchillo de cocina – Afilado, letal y vinculado a la chef del barco.\n
             🔧 Llave inglesa – Pesada, contundente y útil en la sala de máquinas.\n
-            🕯️ Candelabro – Elegante pero mortal, un clásico de los asesinatos misteriosos.\n
             ⚡ Cable eléctrico – Un método silencioso y calculado.\n
-            🍾 Botella rota – Improvisada, sangrienta y caótica.\n
           Tu eres el detective Trevor Knott y ahora escuchas las declaraciones de cada sospechoso. \n
           Empecemos con definir las proposiciones que usaremos en este juego.\n
           -------------------------------------------------------------------------
@@ -191,7 +189,94 @@ def startGame():
           Debemos pasar las proposiciones logicas a CNF para poder usar el SAT-Solver \n
           Proposiciones lógicas obtenidas: \n
           """ + "\n".join(SatSolver) + "\n")
-      
+
+    input(" \n Presiona enter para continuar... \n")
+
+    print(""" 
+          -------------------------------------------------------------------------
+          -------------------------------------------------------------------------
+         Cada proposición debe transformarse en cláusulas disyuntivas para que el SAT-Solver pueda interpretarlas. \n
+            En este caso: \n
+
+            (¬t or ¬p)   \n
+
+
+            Esto se convierte en: Si t, entonces p = [2, -1] \n
+
+            (¬q or ¬s) \n
+
+            Esto se convierte en: No q o s =[-3, 4]  \n
+
+            No r = [-5]  \n
+
+            (k or q)  \n
+
+            Esto se convierte en: k o q = [6, 3]  \n
+
+            (¬t)= [-2]  \n
+
+            (L or V)  \n
+
+            Esto se convierte en: L o V = [7, 10] \n
+
+            (¬M or ¬V) \n
+
+            Esto se convierte en: No M o no V = [-9, -10] \n
+
+            No D y no E = [-8] y [-7] \n
+
+            (D or V)\n
+
+            Esto se convierte en: [8, 10] \n
+
+            No M = [-9] \n
+
+            Te desafio a que hagas tu acusación en usando los numeros proporcionados, \n
+            y descubra quien es el culpable y quien es el arma homicida \n
+            además, donde fue el crimen \n
+
+            El formato para la acusación es el siguiente: \n
+            
+            lugar + arma + culpable \n
+
+          -------------------------------------------------------------------------""")
+
+    input(" \n Presiona enter para continuar... \n")
+
+    print(""" \n
+          ------------------------------------------------------------------------- \n
+            Una pequeña ayuda a memoria \n
+            # Lugares del crimen\n
+            p = 1   # Suite de Richard\n
+            q = 2   # Sala de Máquinas\n
+            r = 3   # Cocina\n
+
+            # Armas\n
+            s = 4   # Llave inglesa\n
+            t = 5   # Cuchillo de cocina\n
+            k = 6   # Cable eléctrico\n
+
+            # Sospechosos\n
+            E = 7   # Eleanor Graves\n
+            L = 8   # Lila Hart\n
+            D = 9   # Dr. Samuel Reeves\n
+            M = 10  # Maggie Sullivan\n
+            V = 11  # Victor Kane\n
+
+            """)
+
+    input(" \n Presiona enter para continuar... \n")
+
+    print(" Es tu tuno, ingresa tu acusación: \n")
+    arr = list(map(int, input("Ingresa los números separados por espacios: ").split()))
+
+    if arr == [2, 4, 11]:
+        print(""" \n Felicidades, has acertado! El culpable es Victor Kane, \n
+         lo hizo en la sala de Maquínas, \n
+         y el arma homicida es con una llave Inglesa \n """)
+    else:
+        print("Lo siento, has fallado. Inténtalo de nuevo.")
+            
 
 
 
