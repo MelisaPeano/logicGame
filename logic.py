@@ -266,16 +266,41 @@ def startGame():
             """)
 
     input(" \n Presiona enter para continuar... \n")
+    satSolverPlace = 2
+    satSolverWeapon = 4
+    satSolverSuspect = 11
 
-    print(" Es tu tuno, ingresa tu acusación: \n")
-    arr = list(map(int, input("Ingresa los números separados por espacios: ").split()))
+    while True:
+      user_input = input("Ingresa los números separados por espacios: \n ")
 
-    if arr == [2, 4, 11]:
-        print(""" \n Felicidades, has acertado! El culpable es Victor Kane, \n
-         lo hizo en la sala de Maquínas, \n
-         y el arma homicida es con una llave Inglesa \n """)
-    else:
-        print("Lo siento, has fallado. Inténtalo de nuevo.")
+      if user_input.lower() == "salir":
+        print("Saliendo del juego... ¡Hasta la próxima! \n")
+        break
+
+      arr = list(map(int, user_input.split()))
+
+     
+      
+      if len(arr) != 3:
+            print("Debes ingresar exactamente 3 números. \n")
+            continue 
+      try:
+        
+
+        if arr == [satSolverPlace, satSolverWeapon, satSolverSuspect]:
+            print("¡Felicidades! Has encontrado al culpable. \n ")
+            break 
+
+        
+        if satSolverPlace == arr[0]:
+            print("El lugar es correcto  \n")
+        if satSolverWeapon == arr[1]:
+            print("El arma es correcta  \n")
+        if satSolverSuspect == arr[2]:
+            print("El culpable es correcto  \n")
+
+      except ValueError:
+        print("Entrada inválida. Ingresa solo números separados por espacios o escribe 'salir'. \n")
             
 
 
