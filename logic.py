@@ -1,6 +1,27 @@
+from pysat.solvers import Glucose3
+
+p = 1   # Suite de Richard
+q = 2   # Sala de Máquinas
+r = 3   # Cocina
+
+      # Armas
+s = 4   # Llave inglesa
+t = 5   # Cuchillo de cocina
+k = 6   # Cable eléctrico
+
+      # Sospechosos
+E = 7   # Eleanor Graves
+L = 8   # Lila Hart
+D = 9   # Dr. Samuel Reeves
+M = 10  # Maggie Sullivan
+V = 11  # Victor Kane
+clauses = []
 def startGame():
+          
+    
     logicalPropositions = []
     SatSolver = [(" \n (¬t or ¬p)"), ("\n(L or V)"), ("\n(¬q or s)"), ("\n(¬M or ¬V)"), ("\n¬t"), ("\n(¬M)"), ("\n(¬r)"),("\n¬D"), ("\n¬E"), ("\n(k or q)"), ("\n(D or V)")  ]
+    
     print("Comienza el juego \n")
     print("""
            -------------------------------------------------------------------------
@@ -83,6 +104,8 @@ def startGame():
           """) 
     logicalPropositions.append("(¬t ∧ ¬p)")
     logicalPropositions.append("( ¬ L → V)")
+    clauses.append([t, -p])
+    clauses.append([L, V])
     input(" \n Presiona enter para continuar... \n")
 
     print(""" \n
@@ -106,6 +129,9 @@ def startGame():
           """) 
     logicalPropositions.append("(q -> s)")
     logicalPropositions.append("(M → ¬V)")
+    clauses.append([-q, s])
+    clauses.append([-M, -V])
+    
     input(" \n Presiona enter para continuar... \n")
     print(""" \n
           Dr. Samuel Reeves. \n
@@ -126,6 +152,9 @@ def startGame():
           """) 
     logicalPropositions.append("¬r")
     logicalPropositions.append("(¬D and ¬E)")
+    clauses.append([-r])
+    clauses.append([-D])
+    clauses.append([-E])
 
     input(" \n Presiona enter para continuar... \n")
 
@@ -150,6 +179,8 @@ def startGame():
           """)
     logicalPropositions.append("(¬k → q)")
     logicalPropositions.append("( ¬ D → V)")
+    clauses.append([k, q])
+    clauses.append([D, V])
     input(" \n Presiona enter para continuar... \n")
     print(""" \n
           Victor Kane. \n
@@ -171,6 +202,25 @@ def startGame():
           """)
     logicalPropositions.append("(¬t)")
     logicalPropositions.append("( ¬M)")
+    clauses.append([-M])
+    clauses.append([-t])
+    clauses.append([-p, -q])
+    clauses.append([-p, -r])
+    clauses.append([-q, -r])
+    clauses.append([-s, -t])
+    clauses.append([-s, -k])
+    clauses.append([-t, -k])
+    clauses.append([-E, -L])
+    clauses.append([-E, -D])
+    clauses.append([-E, -M])
+    clauses.append([-E, -V])
+    clauses.append([-L, -D])
+    clauses.append([-L, -M])
+    clauses.append([-L, -V])
+    clauses.append([-D, -M])
+    clauses.append([-D, -V])
+    clauses.append([-M, -V])
+
 
 
     print("Proposiciones logicas obtenidas hasta el momento: \n" + "\n".join(logicalPropositions))
@@ -266,46 +316,76 @@ def startGame():
             """)
 
     input(" \n Presiona enter para continuar... \n")
-    satSolverPlace = 2
-    satSolverWeapon = 4
-    satSolverSuspect = 11
+
+    solver = Glucose3()
+    for clause in clauses:
+        solver.add_clause(clause)
 
     while True:
-      user_input = input("Ingresa los números separados por espacios: \n ")
+        user_input = input("Ingresa los valores separados por espacios (o escribe 'salir'): \n")
 
-      if user_input.lower() == "salir":
-        print("Saliendo del juego... ¡Hasta la próxima! \n")
-        break
+        if user_input.lower() == "salir":
+            print("Saliendo del juego... ¡Hasta la próxima!\n")
+            break
 
-      arr = list(map(int, user_input.split()))
+        arr = list(map(int, user_input.split()))
 
-     
-      
-      if len(arr) != 3:
-            print("Debes ingresar exactamente 3 números. \n")
-            continue 
-      try:
-        
+        if len(arr) != 3:
+            print("Debes ingresar exactamente 3 valores.\n")
+            continue
 
-        if arr == [satSolverPlace, satSolverWeapon, satSolverSuspect]:
-            print("¡Felicidades! Has encontrado al culpable. \n ")
-            break 
+        if solver.solve():
+            model = solver.get_model()
 
-        
-        if satSolverPlace == arr[0]:
-            print("El lugar es correcto  \n")
-        if satSolverWeapon == arr[1]:
-            print("El arma es correcta  \n")
-        if satSolverSuspect == arr[2]:
-            print("El culpable es correcto  \n")
+        if model is None:
+            print("⚠️ No hay una solución válida en este momento.")
+            continue
 
-      except ValueError:
-        print("Entrada inválida. Ingresa solo números separados por espacios o escribe 'salir'. \n")
+        # Tomar solo los valores positivos
+        model_filtrado = [abs(x) for x in model if x > 0]
+
+        # Validar si los números ingresados están en la solución
+        if set(arr) <= set(model_filtrado):
+            print("""\n🔍 ¡Solución encontrada! El culpable y los detalles del crimen son correctos. \n
+            El culpable es : Victor Kane \n
+            El arma usada fue: LLave inglesa \n
+            El lugar en el que ocurrió fue: La sala de máquinas \n
             
+            """)
+            break
+        else:
+            print("\n🔍 No has encontrado la solución aún")
+
+         # Identificar el lugar
+        lugares = {p: "Suite de Richard", q: "Sala de Máquinas", r: "Cocina"}
+        lugar_crimen = next((lugar for lugar in lugares if lugar in model), None)
+        if (lugar_crimen == arr[0]):
+            print(f"📍 \n Has identificado el lugar del crimen: \n El crimen ocurrió en: {lugares[lugar_crimen]}")
+        else:
+            print(f"📍 \n El lugar del crimen sigue siendo un misterio....")
+        
+         # Identificar el arma
+        armas = {s: "Llave inglesa", t: "Cuchillo de cocina", k: "Cable eléctrico"}
+        arma_usada = next((arma for arma in armas if arma in model), None)
+        if (arma_usada == arr[1]):
+            print(f" \n 🗡️ Has identificado el arma!: El arma usada fue: {armas[arma_usada]}")
+        else:
+            print(f" \n 🗡️ La arma usada sigue siendo un misterio....")
+
+        # Identificar el culpable
+        culpables = [var for var in [E, L, D, M, V] if var in model]
+        if culpables:
+            culpable = culpables[0]
+            if(culpable == arr[2]):
+                nombres = {E: "Eleanor Graves", L: "Lila Hart", D: "Dr. Samuel Reeves", M: "Maggie Sullivan", V: "Victor Kane"}
+                print(f"\n 🕵️‍♂️ Has enconntrado a el culpable es: {nombres[culpable]}")
+            else:
+                print(f"\n 🕵️‍♂️ El culpable aún no ha sido descubierto! \n")
+        
 
 
-
-    
+   
+        
 
 def logicGame():
     print(""" \n
