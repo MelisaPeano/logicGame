@@ -385,8 +385,6 @@ def startGame():
 
 
    
-        
-
 def logicGame():
     print(""" \n
           Hola, bienvenido al proyecto capstone de la asignatura Lógica. ¿Qué desea hacer? \n
